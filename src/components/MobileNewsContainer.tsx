@@ -75,9 +75,11 @@ export default function MobileNewsContainer({
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {news.length} Artikel in dieser Region
-          </Typography>
+          <Container>
+            <Typography sx={{ p: 2, color: "text.secondary" }}>
+              {news.length} Artikel in dieser Region
+            </Typography>
+          </Container>
         </StyledBox>
         <StyledBox
           sx={{
