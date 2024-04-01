@@ -3,7 +3,7 @@ export default interface NewsEntry {
   lat: number;
   intensity: number;
   title: string;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
   url: string;
   source: string;
 }

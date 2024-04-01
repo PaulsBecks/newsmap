@@ -13,15 +13,16 @@ export default function NewsList({ news }: { news: NewsEntry[] }): JSX.Element {
         <>
           <Card>
             <CardActionArea href={newsEntry.url}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={newsEntry.thumbnailUrl}
-                title=""
-              />
+              {newsEntry.thumbnailUrl !== null && (
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={newsEntry.thumbnailUrl}
+                  title=""
+                />
+              )}
               <CardContent>
                 <Typography variant="body1">{newsEntry.title}</Typography>
                 <Chip
-                  spacing={1}
                   label={newsEntry.source}
                   size="small"
                   variant="outlined"

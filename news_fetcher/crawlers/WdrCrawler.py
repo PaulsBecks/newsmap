@@ -5,18 +5,18 @@ from models.NewsDto import NewsDto
 from .Crawler import Crawler
 from models.HeatMapInformation import HeatMapInformation
 
-BR_ENRICHED_DATA_PATH = "br_data_enriched.json"
-class BayrischerRundfunkCrawler(Crawler):
+WDR_ENRICHED_DATA_PATH = "wdr_data_enriched.json"
+class WdrCrawler(Crawler):
     
     def __init__(self):
         super().__init__()
-        self.url = "https://www.br.de/nachrichten/meldungen/nachrichten-bayerischer-rundfunk100~newsRss.xml"
-        self.source = "Bayrischer Rundfunk"
-        with open(BR_ENRICHED_DATA_PATH) as f:
+        self.url = "https://www1.wdr.de/wissen/uebersicht-nachrichten-100.feed"
+        self.source = "WDR"
+        with open(WDR_ENRICHED_DATA_PATH) as f:
             self.enriched_news = json.load(f)
             
     def crawl_news(self) -> List[NewsDto]:
-        print("Crawling Bayrischer Rundfunk")
+        print("Crawling WDR")
         return self.fetch_news_from_feed()
     
     def fetch_news_from_feed(self):
@@ -26,7 +26,7 @@ class BayrischerRundfunkCrawler(Crawler):
             print("Analyzing: ", entry.title)
             enriched_news = self.get_existing_entry_by_id(entry.link)
             if enriched_news is None:
-                heat_map_information = self.open_ai_client.fetch_lon_lat_intensity_from_chat_gpt(entry.title + " / " + entry.summary)
+                heat_map_information = self.open_ai_client.fetch_lon_lat_intensity_from_chat_gpt(entry.title + " / " + entry.summary + " / " + entry.app_tags)
             else:
                 heat_map_information = HeatMapInformation(enriched_news["lon"], enriched_news["lat"], enriched_news["intensity"])
             news.append(
@@ -48,6 +48,6 @@ class BayrischerRundfunkCrawler(Crawler):
     
     def persist_news(self, news):
         self.enriched_news.extend(news)
-        with open(BR_ENRICHED_DATA_PATH, "w") as f:
+        with open(WDR_ENRICHED_DATA_PATH, "w") as f:
             json.dump(self.enriched_news, f, cls=self.encoder)
-        print("Data enriched and saved to br_data_enriched.json")
+        print("Data enriched and saved to wdr_data_enriched.json")

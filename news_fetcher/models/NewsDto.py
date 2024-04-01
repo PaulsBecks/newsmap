@@ -1,5 +1,5 @@
 class NewsDto:
-    def __init__(self, title: str, url: str, date: str, thumbnail_url: str, source: str, lat: float, lon: float, intensity: float):
+    def __init__(self, title: str, url: str, date: str, source: str, lat: float, lon: float, intensity: float, thumbnail_url: str = None,):
         self.title = title
         self.url = url
         self.thumbnailUrl = thumbnail_url
