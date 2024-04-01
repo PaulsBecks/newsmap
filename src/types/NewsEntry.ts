@@ -5,4 +5,5 @@ export default interface NewsEntry {
   title: string;
   thumbnailUrl: string;
   url: string;
+  source: string;
 }
