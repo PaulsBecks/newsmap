@@ -2,9 +2,9 @@
 from models.NewsDto import NewsDto
 from .RssFeedCrawler import RssFeedCrawler
     
-class ZeitCrawler(RssFeedCrawler):
+class SueddeutscheCrawler(RssFeedCrawler):
     def __init__(self):
-        super().__init__("https://newsfeed.zeit.de/news/index", "ZEIT", "zeit")
+        super().__init__("https://rss.sueddeutsche.de/alles", "Süddeutsche Zeitung", "sueddeutsche")
     
     def map_heatmap_information_and_entry_to_news_dto(self, entry, heat_map_information) -> NewsDto:
         return NewsDto(
@@ -14,15 +14,9 @@ class ZeitCrawler(RssFeedCrawler):
             source=self.source, 
             lat=heat_map_information.lat, 
             lon=heat_map_information.lon, 
-            intensity=heat_map_information.intensity,
-            thumbnail_url=self.extract_img(entry.links)
+            intensity=heat_map_information.intensity
         )
     
-    def extract_img(self, links):
-        for link in links:
-            if "image" in link.get("type"):
-                return link.get("href")
-        return None
     
     def entry_to_gpt_input(self, entry):
-        return entry.title + " / " + entry.summary + " / " + str(entry.get("tags", ""))
+        return entry.title + " / " + entry.dcterms_abstract

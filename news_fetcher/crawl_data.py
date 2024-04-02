@@ -11,6 +11,8 @@ from crawlers.SwrCrawler import SwrCrawler
 from crawlers.SpiegelCrawler import SpiegelCrawler
 from crawlers.ZeitCrawler import ZeitCrawler
 from crawlers.Crawler import Crawler
+from crawlers.SueddeutscheCrawler import SueddeutscheCrawler
+from crawlers.TheGuardianCrawler import TheGuardianCrawler
 from encoder import SimpleEncoder
 dotenv.load_dotenv()
 
@@ -25,7 +27,9 @@ if __name__ == "__main__":
         MdrCrawler(),
         SwrCrawler(),
         SpiegelCrawler(),
-        ZeitCrawler()
+        ZeitCrawler(),
+        #SueddeutscheCrawler()
+        TheGuardianCrawler()
         ]
     news = []
     for crawler in crawlers:
