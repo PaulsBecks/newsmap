@@ -1,22 +1,40 @@
 import React from "react";
 import * as ReactDOM from "react-dom";
-import App from "./App.tsx";
+import MapContainer from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CssBaseline from "@mui/material/CssBaseline";
-import { MapContainer } from "react-leaflet";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import Login from "./components/Login.tsx";
+import Articles from "./components/Articles.tsx";
+import CreateArticle from "./components/CreateArticle.tsx";
+import EditArticle from "./components/EditArticles.tsx";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route element={<Login />} path="login" />
+      <Route element={<Articles />} path="articles" />
+      <Route element={<EditArticle />} path="articles/:id" />
+      <Route element={<CreateArticle />} path="articles/new" />
+      <Route element={<MapContainer />} path="/" />
+    </Route>
+  ),
+  {
+    basename: "/newsmap",
+  }
+);
 
 ReactDOM.render(
   <QueryClientProvider client={new QueryClient()}>
     <React.StrictMode>
       <CssBaseline />
-      <MapContainer
-        center={[51.163375, 10.447683]}
-        zoom={7}
-        scrollWheelZoom={false}
-      >
-        <App />
-      </MapContainer>
+      <RouterProvider router={router} />
     </React.StrictMode>
   </QueryClientProvider>,
   document.getElementById("root")!

@@ -5,13 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import NewsEntry from "../types/NewsEntry";
+import { Fragment } from "react/jsx-runtime";
 
 export default function NewsList({ news }: { news: NewsEntry[] }): JSX.Element {
   return (
     <>
       {news?.map((newsEntry: NewsEntry) => (
-        <>
-          <Card>
+        <Fragment key={newsEntry.url}>
+          <Card key={newsEntry.url}>
             <CardActionArea href={newsEntry.url}>
               {newsEntry.thumbnailUrl !== null && (
                 <CardMedia
@@ -31,7 +32,7 @@ export default function NewsList({ news }: { news: NewsEntry[] }): JSX.Element {
             </CardActionArea>
           </Card>
           <br />
-        </>
+        </Fragment>
       ))}
     </>
   );

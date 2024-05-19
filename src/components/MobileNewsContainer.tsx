@@ -5,8 +5,9 @@ import { styled } from "@mui/material/styles";
 import { Container } from "@mui/material";
 import NewsEntry from "../types/NewsEntry";
 import { Global } from "@emotion/react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import NewsList from "./NewsList";
+import DrawerDraggingContext from "../context/DrawerDraggingContext";
 
 const StyledBox = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
@@ -41,8 +42,19 @@ export default function MobileNewsContainer({
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+  const { setIsDrawerDragging } = useContext(DrawerDraggingContext);
+
   return (
-    <Root>
+    <Root
+      onTouchStart={() => {
+        console.log("touchstart");
+        setIsDrawerDragging(true);
+      }}
+      onTouchEnd={() => {
+        console.log("touchend");
+        setIsDrawerDragging(false);
+      }}
+    >
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
@@ -62,6 +74,7 @@ export default function MobileNewsContainer({
         ModalProps={{
           keepMounted: true,
         }}
+        hysteresis={0.1}
       >
         <StyledBox
           sx={{
