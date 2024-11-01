@@ -1,8 +1,6 @@
 name: React app deployment
 
 on:
-  schedule:
-    - cron: "0 1 * * *"
   workflow_dispatch:
 
 env:
